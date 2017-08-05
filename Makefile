@@ -1,4 +1,4 @@
-TARGET = prog
+TARGET = locking_incrementing
 LIBS = -lm
 CC = gcc
 CFLAGS = -g -Wall
@@ -22,3 +22,6 @@ $(TARGET): $(OBJECTS)
 clean:
 	-rm -f *.o
 	-rm -f $(TARGET)
+
+run: $(TARGET)
+	./$(TARGET)
