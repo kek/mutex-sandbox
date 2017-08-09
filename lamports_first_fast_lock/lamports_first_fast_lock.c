@@ -10,7 +10,6 @@ int tests_run = 0;
 
 struct data {
   int x;
-  pthread_mutex_t mutex;
 };
 
 void *increment(void *args_void_ptr) {
@@ -18,9 +17,7 @@ void *increment(void *args_void_ptr) {
   struct data *args = (struct data *)args_void_ptr;
 
   while(++i <= INCREMENT_AMOUNT) {
-    pthread_mutex_lock(&args->mutex);
     args->x = args->x + 1;
-    pthread_mutex_unlock(&args->mutex);
   }
   return args;
 }
@@ -29,8 +26,6 @@ static char * test_mutex_lock() {
   pthread_t thread_list[NUM_THREADS];
   struct data args = { .x = 0 };
   int i;
-
-  pthread_mutex_init(&args.mutex, NULL);
 
   for(i = 0; i < NUM_THREADS; ++i) {
     pthread_create(&thread_list[i], NULL, increment, &args);
